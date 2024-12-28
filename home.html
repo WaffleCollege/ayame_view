@@ -11,9 +11,14 @@
 <body>
   <h1>ディベートモード選択</h1>
   <!-- ボタン　３つ -->
-  <form action="/next4page"><!--ボタンを押したら次の画面に遷移-->
+  <form action="/next4page" method ="post"><!--ボタンを押したら次の画面に遷移-->
+    <input type="hidden" name="mode" value="easy">
     <button type="button">やさしい</button>
+
+    <input type="hidden" name="mode" value="normal">
     <button type="button">普通</button>
+
+    <input type="hidden" name="mode" value="difficult">
     <button type="button">むずかしい</button>
   </form>
 
