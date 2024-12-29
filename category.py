@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
+
+#この辺はよく分かっていない。データベースは、共通している
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'
 db = SQLAlchemy(app)
@@ -10,18 +12,20 @@ class Data(db.Model):
     category = db.Column(db.String(50))
     text = db.Column(db.Text)
 
-@app.route('/debate_page', methods=['POST'])
-def submit_data():
-    category = request.form['category']
-    text = request.form['free_text']
-    new_data = Data(category=category, text=text)
-    db.session.add(new_data)
+#自分で書いたお題をデータベースに保存する。プロンプトに渡す
+@app.post('/debate_page')
+def submit_topic():
+    # フォームに書いたテキスト値を取得
+    #categoryなしor topicと同じにする
+    text = request.form["free_text"]
+    # データベースに保存
+    new_topic = Topic(text=text)
+    db.session.add(new_topic)
     db.session.commit()
-    return "データが保存されました"
 
-@app.route("/next_page5", method ="GET")#ボタンを押したら次のページに行く、議論開始！という画面を挟んで、ディベート画面へ遷移
+@app.get("/next_page5")#ボタンを押したら次のページに行く、議論開始！という画面を挟んで、ディベート画面へ遷移
 def next_page5():
-    return render_template("debate_start.html")#それか、そのままチャット画面に遷移するか
+    return render_template("debate_start.html")#("debate.html")それか、そのままチャット画面に遷移するか
 
 
 if __name__ == '__main__':
