@@ -12,13 +12,39 @@
 </head>
 <body>
         <!-- ボタン　 -->
-    <form action="/next4page"><!--ボタンを押したら次の画面に遷移-->
-        <button type="button">環境問題</button>
-        <button type="button">社会問題</button>
-        <button type="button">教育</button>
-        <!--自由記述　これだけ、押したら自由記述画面にいく-->
-        <button type="button">自由記述</button>
+    <form action="/debate_page" method="post"><!--ボタンを押したらデータベースに保存される-->
+            <button type="button" data-category="environment">環境問題</button>
+            <input type="hidden" name="category" value="environment">
+          
+            <button type="button" data-category="society">社会問題</button>
+            <input type="hidden" name="category" value="society">
+          
+            <button type="button" data-category="education">教育</button>
+            <input type="hidden" name="category" value="education">
+
+            <button type="button" data-category="education">就活</button>
+            <input type="hidden" name="category" value="job_hunting">
+          
+            <!--自由記述　これだけ、押したら自由記述画面にいく-->
+            <button type="button" id="free-description-button">自由記述</button>
+            <textarea id="free-description" name="free_text"></textarea>
+          </form>
+          
+          <script>
+            // 自由記述ボタンを取得
+            const freeDescriptionButton = document.getElementById('free-description-button');
+            // 自由記述エリアを取得
+            const freeDescriptionArea = document.getElementById('free-description');
+          
+            // 自由記述ボタンがクリックされたときの処理
+            freeDescriptionButton.addEventListener('click', () => {
+              // フォームを送信
+              const form = freeDescriptionButton.closest('form');
+              form.submit();
+            });
+          </script>
     </form>
+    
     
 
     </body>
