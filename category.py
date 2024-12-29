@@ -12,6 +12,17 @@ class Data(db.Model):
     category = db.Column(db.String(50))
     text = db.Column(db.Text)
 
+#ボタンで選択したカテゴリーをデータベースに保存する。合ってるか不安なところ
+@app.post('/debate_page')
+def buttun_category():
+    category = request.form["category"]#name=categoryのボタンを選択したら、categoryとして保存される。
+      # データベースに保存
+    new_category = Category(category=category)#データベースのcategory列に追加
+    db.session.add(new_category)
+    db.session.commit()
+
+
+
 #自分で書いたお題をデータベースに保存する。プロンプトに渡す
 @app.post('/debate_page')
 def submit_topic():
