@@ -13,9 +13,18 @@
 <body>
         <!-- ボタン　 -->
     <form action="/debate_page" method="post"><!--ボタンを押したらデータベースに保存される-->
-      {% for category in categories %}
-        <button type="submit" name="category" value="{{ category }}">{{ category }}</button>
-      {% endfor %}
+      <button type="button" data-category="{{ category }}">{{ category }}</button>
+      <input type="hidden" name="category" value="environment">
+          
+      <button type="button" data-category="society">社会問題</button>
+      <input type="hidden" name="category" value="society">
+          
+      <button type="button" data-category="education">教育</button>
+      <input type="hidden" name="category" value="education">
+
+      <button type="button" data-category="education">就活</button>
+      <input type="hidden" name="category" value="job_hunting">
+          
       <!--自由記述　これだけ、押したら自由記述画面にいく-->
       <button type="button" id="free-description-button">自由記述</button>
       <textarea id="free-description" name="free_text"></textarea>
