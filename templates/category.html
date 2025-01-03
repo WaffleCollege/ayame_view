@@ -6,27 +6,41 @@
 
 {% block content %}
         <!-- ボタン　 -->
-    <form action="/debate_page" method="post"><!--ボタンを押したらデータベースに保存される-->
+    <form action="/category/submit_category" method="post"><!--ボタンを押したらデータベースに保存される-->
       {% for category in categories %}
         <button type="submit" name="category" value="{{ category }}">{{ category }}</button>
       {% endfor %}
       <!--自由記述　これだけ、押したら自由記述画面にいく-->
-      <button type="button" id="free-description-button">自由記述</button>
-      <textarea id="free-description" name="free_text"></textarea>
+      <button id="modalButton">モーダルを開く</button>
+
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>モーダルウィンドウのタイトル</h2>
+          <p>モーダルウィンドウの内容や説明文</p>
+        </div>
+      </div>
+       
     </form>
           
     <script>
-       // 自由記述ボタンを取得
-      const freeDescriptionButton = document.getElementById('free-description-button');
-      // 自由記述エリアを取得
-      const freeDescriptionArea = document.getElementById('free-description');
-          
-      // 自由記述ボタンがクリックされたときの処理
-      freeDescriptionButton.addEventListener('click', () => {
-        // フォームを送信
-        const form = freeDescriptionButton.closest('form');
-        form.submit();
-           });
+      const modal = document.getElementById('modal');
+      const btn = document.getElementById('modalButton');
+      const span = document.getElementsByClassName("close")[0];
+
+      btn.onclick = function() {
+      modal.style.display = "block";
+      }
+
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
     </script>
     </form>
     
