@@ -1,35 +1,41 @@
-{% extends "layout.html" %}
-
-{% block header %}
-  カテゴリー選択
-{% endblock %}
-
-{% block content %}
-        <!-- ボタン　 -->
-    <form action="/category/submit_category" method="post"><!--ボタンを押したらデータベースに保存される-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <header>
+    <p>カテゴリー選択</p>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='category.css') }}">
+  </header>
+</head>
+<body>
+    <!-- ボタン -->
+    <form action="/category/submit_category" method="post">
+      <h3>カテゴリーを選択してください</h3>
+      <div class="category-buttons">
       {% for category in categories %}
-        <button type="submit" name="category" value="{{ category }}">{{ category }}</button>
+          <button type="submit" name="category" value="{{ category }}" class="category-btn">{{ category }}</button>
       {% endfor %}
-      <!--自由記述　これだけ、押したら自由記述画面にいく-->
-      <button id="modalButton">モーダルを開く</button>
+      <!-- 自由記述 -->
+      <button type="button" id="modalButton">自由記述</button>
 
       <div id="modal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          <h2>モーダルウィンドウのタイトル</h2>
-          <p>モーダルウィンドウの内容や説明文</p>
+          <p>議論したいテーマを記述してください</p>
+          <textarea name="topic" id="freeText"></textarea>
+          <button type="submit" id="saveBtn">送信</button>
         </div>
       </div>
-       
     </form>
-          
+
     <script>
       const modal = document.getElementById('modal');
       const btn = document.getElementById('modalButton');
       const span = document.getElementsByClassName("close")[0];
 
       btn.onclick = function() {
-      modal.style.display = "block";
+        modal.style.display = "block";
       }
 
       span.onclick = function() {
@@ -42,9 +48,5 @@
         }
       }
     </script>
-    </form>
-    
-    
-{% endblock %}
-
-
+</body>
+</html>

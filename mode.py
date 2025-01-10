@@ -1,18 +1,22 @@
-#flaskをimport　ここは同じだと思うから後で統合すると思う
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for
+from extensions import db
+from models import AllDebate
 
+mode_bp = Blueprint('mode', __name__, url_prefix='/mode')
 
-#簡単、普通などの、モード選択ボタンを押したらデータベースに保存
-@app.post('/category_page')
-def next_category_page():
-    mode = request.form["mode"]#name=modeのボタンを選択したら、categoryとして保存される。
-    # カテゴリーの保存処理
+@mode_bp.route('/mode_selection', methods=['GET'])
+def mode_selection():
     modes = ['やさしい', 'ふつう', 'むずかしい']
-    new_mode = Mode(mode=mode)
-    db.session.add(new_mode)
-    db.session.commit()
-    return render_template('category.html')#次のページへ
+    return render_template('mode.html', modes=modes)
 
+@mode_bp.route('/save_mode', methods=['POST'])
+def save_mode():
+    mode = request.form.get('mode')
+    debate = AllDebate.query.first()
+    if debate:
+        debate.mode = mode
+        db.session.commit()
+    return redirect(url_for('category.category_selection'))
 
 
 

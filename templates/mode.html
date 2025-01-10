@@ -1,30 +1,29 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="ja">
 
-{% block header %}
-  モード選択
-{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モード選択</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mode.css') }}">
+</head>
 
-{% block content %}
-
-<div>
-  <h1>ディベートモード選択</h1>
-</div>
-  <!-- ボタン　３つ -->
-  <form action="/category_page" method ="post" novalidate="novalidate"><!--ボタンを押したら次の画面に遷移-->
-    {% for mode in modes %}
-      <button type="submit" name="mode" value="{{ mode }}">{{ mode }}</button>
-    {% endfor %}
-  </form>
-
-  <form action="/category_page" method ="post" novalidate="novalidate"><!--ボタンを押したら次の画面に遷移-->
-    {% for mode in modes %}
-      <button type="submit" name="mode" value="{{ mode }}">{{ mode }}</button>
-    {% endfor %}
-  </form>
-
-
-
+<body>
+    <header>
+        <p>ディベートモード選択</p>
+    </header>
+   <main>
+    <div class="mode-buttons">
+        <form action="{{ url_for('mode.save_mode') }}" method="POST">
+            {% for mode in modes %}
+                <button type="submit" name="mode" value="{{ mode }}" class="btn">{{ mode }}</button>
+            {% endfor %}
+        </div>
+        </form>
+    </main>
 </body>
+
 </html>
    
     

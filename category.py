@@ -12,20 +12,14 @@ def category_selection():
 @category_bp.route('/submit_category', methods=['POST'])
 def submit_category():
     category = request.form.get('category')
+    topic = request.form.get('topic')  # 自由記述の場合のトピック
+
     debate = AllDebate.query.first()
     if debate:
-        debate.category = category
+        if category:
+            debate.category = category
+        if topic:
+            debate.topic = topic
         db.session.commit()
-    return redirect(url_for('debate.debate'))
 
-@category_bp.route('/submit_topic', methods=['POST'])
-def submit_topic():
-    category = request.form.get('category')
-    free_text = request.form.get('free_text')
-
-    # データベースに保存する処理
-    new_debate = AllDebate(category=category, text=free_text)
-    db.session.add(new_debate)
-    db.session.commit()
-
-    return redirect(url_for('debate.debate'))  # debate.debateにリダイレクト
+    return redirect(url_for('role.role_selection'))
